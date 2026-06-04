@@ -49,9 +49,10 @@ public class dashboard extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jComboBox2 = new javax.swing.JComboBox<>();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        buttonTambah = new javax.swing.JButton();
+        buttonReset = new javax.swing.JButton();
+        buttonSimpan = new javax.swing.JButton();
+        buttonKembaliLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,7 +106,7 @@ public class dashboard extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Status Karyawan :");
+        jLabel11.setText("Jenis Kayawan");
 
         inputId.setText("Input id");
         inputId.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -167,64 +168,71 @@ public class dashboard extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID Karyawan", "Nama Karyawan", "Status Karyawan", "Aksi"
+                "ID Karyawan", "Nama Karyawan", "Jabatan", "Departemen", "Jenis Karyawan", "Gaji Pokok", "Tunjangan"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                true, false, false, false
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class
             };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, true, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(5).setResizable(false);
+            jTable1.getColumnModel().getColumn(6).setResizable(false);
+        }
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Departemen--", "HRD", "Finance & Accounting", "Marketing & Sales", "Operasional & Produksi", "IT" }));
         jComboBox2.addActionListener(this::jComboBox2ActionPerformed);
 
-        jButton4.setBackground(new java.awt.Color(255, 255, 102));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 102, 102));
-        jButton4.setText("Tambah");
-        jButton4.setActionCommand("+Tambah");
-        jButton4.addActionListener(this::jButton4ActionPerformed);
+        buttonTambah.setBackground(new java.awt.Color(255, 255, 102));
+        buttonTambah.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        buttonTambah.setForeground(new java.awt.Color(255, 102, 102));
+        buttonTambah.setText("Tambah");
+        buttonTambah.setActionCommand("+Tambah");
+        buttonTambah.addActionListener(this::buttonTambahActionPerformed);
 
-        jButton5.setBackground(new java.awt.Color(255, 255, 102));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 102, 102));
-        jButton5.setText("Reset");
-        jButton5.setActionCommand("+Tambah");
-        jButton5.addActionListener(this::jButton5ActionPerformed);
+        buttonReset.setBackground(new java.awt.Color(255, 255, 102));
+        buttonReset.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        buttonReset.setForeground(new java.awt.Color(255, 102, 102));
+        buttonReset.setText("Reset");
+        buttonReset.setActionCommand("+Tambah");
+        buttonReset.addActionListener(this::buttonResetActionPerformed);
 
-        jButton6.setBackground(new java.awt.Color(255, 255, 102));
-        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 102, 102));
-        jButton6.setText("Simpan");
-        jButton6.setActionCommand("+Tambah");
-        jButton6.addActionListener(this::jButton6ActionPerformed);
+        buttonSimpan.setBackground(new java.awt.Color(255, 255, 102));
+        buttonSimpan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        buttonSimpan.setForeground(new java.awt.Color(255, 102, 102));
+        buttonSimpan.setText("Simpan");
+        buttonSimpan.setActionCommand("+Tambah");
+        buttonSimpan.addActionListener(this::buttonSimpanActionPerformed);
+
+        buttonKembaliLogin.setBackground(new java.awt.Color(255, 51, 51));
+        buttonKembaliLogin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        buttonKembaliLogin.setForeground(new java.awt.Color(255, 255, 255));
+        buttonKembaliLogin.setText("Kembali");
+        buttonKembaliLogin.addActionListener(this::buttonKembaliLoginActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(44, 44, 44)
-                        .addComponent(buttonAbsensi)
-                        .addGap(440, 719, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -254,30 +262,45 @@ public class dashboard extends javax.swing.JFrame {
                                 .addComponent(jCheckBox2)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(boxJabatan, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 257, Short.MAX_VALUE))
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 266, Short.MAX_VALUE))
                         .addGap(18, 18, 18))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(145, 145, 145)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(133, 133, 133)
+                        .addComponent(buttonTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(buttonSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(jLabel1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(jButton1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(buttonAbsensi)
+                        .addGap(29, 29, 29)
+                        .addComponent(buttonKembaliLogin)
+                        .addGap(32, 32, 32)
+                        .addComponent(jButton3)))
                 .addGap(44, 44, 44))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
                     .addComponent(buttonAbsensi)
-                    .addComponent(jButton3))
-                .addGap(73, 73, 73)
+                    .addComponent(buttonKembaliLogin)
+                    .addComponent(jButton3)
+                    .addComponent(jButton1))
+                .addGap(80, 80, 80)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,9 +335,9 @@ public class dashboard extends javax.swing.JFrame {
                             .addComponent(inputTunjangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(22, 22, 22)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(buttonTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -343,7 +366,7 @@ public class dashboard extends javax.swing.JFrame {
 
     private void buttonAbsensiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAbsensiActionPerformed
         // TODO add your handling code here:
-        absensi absen = new absensi();
+        Presensi absen = new Presensi();
         absen.setVisible(true);
         
         this.dispose();
@@ -389,7 +412,7 @@ public class dashboard extends javax.swing.JFrame {
     private void inputIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputIdFocusLost
         // TODO add your handling code here:
         if (inputId.getText().trim().isEmpty()){
-            inputId.setText("Inputvid");
+            inputId.setText("Input id");
             inputId.setForeground(new java.awt.Color(204, 204, 204));
         }
     }//GEN-LAST:event_inputIdFocusLost
@@ -480,17 +503,26 @@ public class dashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_inputTunjanganCaretUpdate
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_buttonTambahActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_buttonResetActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void buttonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSimpanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_buttonSimpanActionPerformed
+
+    private void buttonKembaliLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKembaliLoginActionPerformed
+        // TODO add your handling code here:
+        LoginPage login = new LoginPage();
+        login.setVisible(true);
+        
+        this.dispose();
+                       
+    }//GEN-LAST:event_buttonKembaliLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -520,15 +552,16 @@ public class dashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> boxJabatan;
     private javax.swing.JButton buttonAbsensi;
+    private javax.swing.JButton buttonKembaliLogin;
+    private javax.swing.JButton buttonReset;
+    private javax.swing.JButton buttonSimpan;
+    private javax.swing.JButton buttonTambah;
     private javax.swing.JTextField inputGajiPokok;
     private javax.swing.JTextField inputId;
     private javax.swing.JTextField inputNama;
     private javax.swing.JTextField inputTunjangan;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox<String> jComboBox2;
