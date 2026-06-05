@@ -4,12 +4,33 @@
  */
 package com.mycompany.projectkel8;
 
-/**
- *
- * @author USER
- */
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class Presensi extends javax.swing.JFrame {
     
+    private static Connection mysqlconfig;
+    
+    public static Connection configDB()throws SQLException 
+    {
+        try {
+            String url="jdbc:mysql://localhost:3306/data_presensi";
+            String user="roat";
+            String pass="";
+            
+            DriverManager.registerDriver (new com.mysql.cj.jdbc.Driver());
+            mysqlconfig = DriverManager.getConnection(url, user, pass);
+        }
+        catch (Exception e)
+        {
+            System.err.println("Koneksi gagal "+e.getMessage());
+        }
+        return mysqlconfig;
+    }
+            
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Presensi.class.getName());
 
     /**
@@ -17,6 +38,8 @@ public class Presensi extends javax.swing.JFrame {
      */
     public Presensi() {
         initComponents();
+        load_table();
+        kosong();
     }
 
     /**
@@ -36,18 +59,22 @@ public class Presensi extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
-        inputIdPresensi = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        inputJam = new javax.swing.JTextField();
-        inputNama = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        inputJam1 = new javax.swing.JTextField();
+        buttonKembaliDB1 = new javax.swing.JButton();
+        buttonKembaliDB2 = new javax.swing.JButton();
+        buttonKembaliDB3 = new javax.swing.JButton();
+        buttonKembaliDB4 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -55,21 +82,21 @@ public class Presensi extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 51, 51));
+        jPanel1.setBackground(new java.awt.Color(153, 204, 255));
 
-        buttonKembaliDB.setBackground(new java.awt.Color(255, 102, 102));
+        buttonKembaliDB.setBackground(new java.awt.Color(153, 153, 255));
         buttonKembaliDB.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         buttonKembaliDB.setForeground(new java.awt.Color(255, 255, 255));
         buttonKembaliDB.setText("Kembali");
         buttonKembaliDB.addActionListener(this::buttonKembaliDBActionPerformed);
 
-        jButton2.setBackground(new java.awt.Color(255, 51, 51));
+        jButton2.setBackground(new java.awt.Color(153, 204, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Presensi");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 102));
+        jButton3.setBackground(new java.awt.Color(204, 204, 204));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 102, 102));
         jButton3.setText("CETAK SLIP GAJI");
@@ -83,104 +110,80 @@ public class Presensi extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Tanggal :");
 
-        jTextField1.setText("jTextField1");
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("REKAPITULASI ABSEN ");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID Karyawan", "Nama Karyawan", "Tanggal", "Jam Masuk", "Jam Keluar", "Lembur"
+                "ID Karyawan", "Nama Karyawan", "Tanggal", "Status Kehadiran", "Durasi Lembur"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Id Karyawan:");
-
-        inputIdPresensi.setText("Input id");
-        inputIdPresensi.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                inputIdPresensiFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                inputIdPresensiFocusLost(evt);
-            }
-        });
-        inputIdPresensi.addActionListener(this::inputIdPresensiActionPerformed);
-        inputIdPresensi.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                inputIdPresensiKeyTyped(evt);
-            }
-        });
+        jLabel7.setText("Nama :");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Jam Masuk");
-
-        inputJam.setText("Input jam masuk");
-        inputJam.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                inputJamFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                inputJamFocusLost(evt);
-            }
-        });
-        inputJam.addActionListener(this::inputJamActionPerformed);
-        inputJam.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                inputJamKeyTyped(evt);
-            }
-        });
-
-        inputNama.setText("Input nama");
-        inputNama.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                inputNamaFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                inputNamaFocusLost(evt);
-            }
-        });
-        inputNama.addActionListener(this::inputNamaActionPerformed);
-        inputNama.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                inputNamaKeyTyped(evt);
-            }
-        });
+        jLabel8.setText("Kehadiran");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Nama :");
+        jLabel3.setText("ID Karyawan :");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Jam Keluar");
+        jLabel9.setText("Durasi Lembur");
 
-        inputJam1.setText("Input jam keluar");
-        inputJam1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                inputJam1FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                inputJam1FocusLost(evt);
+        buttonKembaliDB1.setBackground(new java.awt.Color(153, 153, 255));
+        buttonKembaliDB1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonKembaliDB1.setForeground(new java.awt.Color(255, 255, 255));
+        buttonKembaliDB1.setText("Tambah");
+        buttonKembaliDB1.addActionListener(this::buttonKembaliDB1ActionPerformed);
+
+        buttonKembaliDB2.setBackground(new java.awt.Color(153, 153, 255));
+        buttonKembaliDB2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonKembaliDB2.setForeground(new java.awt.Color(255, 255, 255));
+        buttonKembaliDB2.setText("Edit");
+        buttonKembaliDB2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonKembaliDB2MouseClicked(evt);
             }
         });
-        inputJam1.addActionListener(this::inputJam1ActionPerformed);
-        inputJam1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                inputJam1KeyTyped(evt);
-            }
-        });
+        buttonKembaliDB2.addActionListener(this::buttonKembaliDB2ActionPerformed);
+
+        buttonKembaliDB3.setBackground(new java.awt.Color(153, 153, 255));
+        buttonKembaliDB3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonKembaliDB3.setForeground(new java.awt.Color(255, 255, 255));
+        buttonKembaliDB3.setText("Clear");
+        buttonKembaliDB3.addActionListener(this::buttonKembaliDB3ActionPerformed);
+
+        buttonKembaliDB4.setBackground(new java.awt.Color(153, 153, 255));
+        buttonKembaliDB4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonKembaliDB4.setForeground(new java.awt.Color(255, 255, 255));
+        buttonKembaliDB4.setText("Delete");
+        buttonKembaliDB4.addActionListener(this::buttonKembaliDB4ActionPerformed);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "HADIR", "ABSEN", " " }));
+
+        jTextField1.setText("*YYYY-MM-DD");
+
+        jTextField2.setEditable(false);
+        jTextField2.setText("jTextField2");
+        jTextField2.addActionListener(this::jTextField2ActionPerformed);
+
+        jTextField3.setText("jTextField3");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -193,38 +196,50 @@ public class Presensi extends javax.swing.JFrame {
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonKembaliDB, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
+                        .addGap(139, 139, 139)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(191, 191, 191))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel8)
-                                    .addComponent(jLabel9))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(inputJam, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                                    .addComponent(inputJam1)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel9)
                                     .addComponent(jLabel3)
+                                    .addComponent(jLabel7)
                                     .addComponent(jLabel2))
-                                .addGap(36, 36, 36)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(inputIdPresensi, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(30, 30, 30)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(inputNama, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 86, Short.MAX_VALUE))))
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 163, Short.MAX_VALUE))
+                                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                                        .addComponent(jLabel1)
+                                        .addGap(66, 66, 66))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(buttonKembaliDB3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(buttonKembaliDB1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(buttonKembaliDB4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(buttonKembaliDB2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(34, Short.MAX_VALUE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(jLabel4)
+                                .addGap(435, 435, 435))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,29 +255,35 @@ public class Presensi extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(inputNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(inputIdPresensi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(inputJam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(inputJam1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(60, Short.MAX_VALUE))
+                            .addComponent(jLabel7)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(8, 8, 8)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(buttonKembaliDB2)
+                            .addComponent(buttonKembaliDB4)
+                            .addComponent(buttonKembaliDB1)
+                            .addComponent(buttonKembaliDB3))))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -298,113 +319,167 @@ public class Presensi extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void inputIdPresensiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputIdPresensiActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_inputIdPresensiActionPerformed
-
-    private void inputIdPresensiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputIdPresensiKeyTyped
-        // TODO add your handling code here:
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && c != ' ' && c != java.awt.event.KeyEvent.VK_BACK_SPACE && c != java.awt.event.KeyEvent.VK_DELETE){
-            evt.consume();
-        }
-    }//GEN-LAST:event_inputIdPresensiKeyTyped
-
-    private void inputIdPresensiFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputIdPresensiFocusLost
-        // TODO add your handling code here:
-            if (inputIdPresensi.getText().trim().isEmpty()){
-            inputIdPresensi.setText("Input id");
-            inputIdPresensi.setForeground(new java.awt.Color(204, 204, 204));
-        }
-    }//GEN-LAST:event_inputIdPresensiFocusLost
-
-    private void inputIdPresensiFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputIdPresensiFocusGained
-        // TODO add your handling code here:
-            if (inputIdPresensi.getText().equals("Input id")){
-            inputIdPresensi.setText("");
-            inputIdPresensi.setForeground(java.awt.Color.BLACK);
-        }
-    }//GEN-LAST:event_inputIdPresensiFocusGained
-
-    private void inputJamFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputJamFocusGained
-        // TODO add your handling code here:
-                // TODO add your handling code here:
-            if (inputIdPresensi.getText().equals("Input jam")){
-            inputIdPresensi.setText("");
-            inputIdPresensi.setForeground(java.awt.Color.BLACK);
-        }
-    }//GEN-LAST:event_inputJamFocusGained
-
-    private void inputJamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputJamFocusLost
-        // TODO add your handling code here:
-            if (inputIdPresensi.getText().trim().isEmpty()){
-            inputIdPresensi.setText("Input jam");
-            inputIdPresensi.setForeground(new java.awt.Color(204, 204, 204));
+    private void buttonKembaliDB1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKembaliDB1ActionPerformed
+        try 
+        {
+            if (jComboBox1.getSelectedItem().toString().equals("- Pilih ID -")) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Silakan pilih ID terlebih dahulu!");
+                return;
             }
-    }//GEN-LAST:event_inputJamFocusLost
-
-    private void inputJamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputJamActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inputJamActionPerformed
-
-    private void inputJamKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputJamKeyTyped
-        // TODO add your handling code here:
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && c != ' ' && c != java.awt.event.KeyEvent.VK_BACK_SPACE && c != java.awt.event.KeyEvent.VK_DELETE){
-            evt.consume();
+            String sql = "INSERT INTO table_presensi VALUES ('"
+                    + jComboBox1.getSelectedItem() + "','"  // ID/NIM dari ComboBox (Urutan 1)
+                    + jTextField2.getText() + "','"         // Nama Karyawan/Mhs otomatis (Urutan 2)
+                    + jTextField1.getText() + "','"         // Kolom Tambahan, misal: Tanggal (Urutan 3)
+                    + jComboBox2.getSelectedItem() + "','"  // Status Kehadiran (Combo Box 2: HADIR/IZIN/SAKIT) 4
+                    + jTextField3.getText() + "')";         // Kolom Tambahan, misal: Durasi Lembur (Urutan 5)
+            // 3. Hubungkan ke database menggunakan fungsi configDB() dari modulmu
+            java.sql.Connection conn = (Connection)Presensi.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            
+            // 4. Notifikasi jika sukses
+            javax.swing.JOptionPane.showMessageDialog(null, "Penyimpanan Data Berhasil");
+            
+            // 5. Refresh tabel dan kosongkan form lagi (Sesuai poin 15 di modul)
+            load_table();
+            kosong();
+            
         }
-    }//GEN-LAST:event_inputJamKeyTyped
-
-    private void inputNamaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputNamaFocusGained
-        // TODO add your handling code here:
-        if (inputNama.getText().equals("Input nama")){
-            inputNama.setText("");
-            inputNama.setForeground(java.awt.Color.BLACK);
+        catch (Exception e)
+            
+        {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
         }
+            
+    }//GEN-LAST:event_buttonKembaliDB1ActionPerformed
 
-    }//GEN-LAST:event_inputNamaFocusGained
-
-    private void inputNamaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputNamaFocusLost
-        // TODO add your handling code here:
-        if (inputNama.getText().trim().isEmpty()){
-            inputNama.setText("Inputvid");
-            inputNama.setForeground(new java.awt.Color(204, 204, 204));
+    private void buttonKembaliDB2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKembaliDB2ActionPerformed
+        try
+        {
+            // Validasi pencegahan jika user belum memilih ID Karyawan yang mau diedit
+            if(jComboBox1.getSelectedItem().toString().equals("- Pilih ID -")) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Silakan pilih ID Karyawan yang akan diedit!");
+                return;
+            }
+            
+            // Query UPDATE disesuaikan dengan struktur tabel database presensi kamu
+            String sql = "UPDATE table_presensi SET " 
+                    + "WHERE id_karyawan = '" + jComboBox1.getSelectedItem() + "'"
+                    + "nama = '" + jTextField2.getText() + "', "
+                    + "tanggal = '" + jTextField1.getText() + "', "
+                    + "status_kehadiran = '" + jComboBox2.getSelectedItem() + "', "
+                    + "durasi_lembur = '" + jTextField3.getText() + "' ";
+                    
+            
+            // Membuka koneksi menggunakan method configDB() sesuai pola modul
+            java.sql.Connection conn = (Connection)Presensi.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+                    
+            // Menampilkan notifikasi sukses
+            javax.swing.JOptionPane.showMessageDialog(null, "Data Berhasil Di-edit");
+            
+            // Refresh tabel rekapitulasi dan bersihkan form kembali
+            load_table();
+            kosong();
         }
-
-    }//GEN-LAST:event_inputNamaFocusLost
-
-    private void inputNamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNamaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inputNamaActionPerformed
-
-    private void inputNamaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputNamaKeyTyped
-        // TODO add your handling code here:
-        char c = evt.getKeyChar();
-        if (!Character.isLetter(c) && c != ' ' && c != java.awt.event.KeyEvent.VK_BACK_SPACE && c != java.awt.event.KeyEvent.VK_DELETE) {
-            evt.consume(); // Tolak karakter selain huruf dan spasi
+        catch (Exception e)
+        {
+            javax.swing.JOptionPane.showMessageDialog(this, "Perubahan Data Gagal: " + e.getMessage());
         }
-    }//GEN-LAST:event_inputNamaKeyTyped
+            
+    }//GEN-LAST:event_buttonKembaliDB2ActionPerformed
 
-    private void inputJam1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputJam1FocusGained
+    private void buttonKembaliDB3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKembaliDB3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_inputJam1FocusGained
+    }//GEN-LAST:event_buttonKembaliDB3ActionPerformed
 
-    private void inputJam1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputJam1FocusLost
+    private void buttonKembaliDB4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKembaliDB4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_inputJam1FocusLost
+    }//GEN-LAST:event_buttonKembaliDB4ActionPerformed
 
-    private void inputJam1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputJam1ActionPerformed
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_inputJam1ActionPerformed
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void inputJam1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputJam1KeyTyped
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_inputJam1KeyTyped
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void buttonKembaliDB2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonKembaliDB2MouseClicked
+        int baris = jTable1.rowAtPoint(evt.getPoint());
+        
+        // 2. Ambil data dari kolom tabel (Ingat: Kolom 0 adalah No, jadi ID Karyawan ada di Kolom 1)
+        String id_karyawan = jTable1.getValueAt(baris, 1).toString();
+        String nama = jTable1.getValueAt(baris, 2).toString();
+        String tanggal = jTable1.getValueAt(baris, 3).toString();
+        String kehadiran = jTable1.getValueAt(baris, 4).toString();
+        String lembur = jTable1.getValueAt(baris, 5).toString();
+        
+        // 3. Set/Masukkan kembali data tersebut ke komponen Form di atas
+        jComboBox1.setSelectedItem(id_karyawan); // Mengeset pilihan ID Karyawan (Combo Box 1)
+        jTextField2.setText(nama);               // Mengisi Nama Karyawan (jTextField2 di formmu)
+        jTextField1.setText(tanggal);            // Mengisi Tanggal (Sesuaikan nama jTextField kamu)
+        jComboBox2.setSelectedItem(kehadiran);   // Mengeset Status Kehadiran (Combo Box 2)
+        jTextField3.setText(lembur);             // Mengisi Durasi Lembur
+    }//GEN-LAST:event_buttonKembaliDB2MouseClicked
 
     /**
      * @param args the command line arguments
      */
+    private void load_table()
+    {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("No");
+        model.addColumn("ID Karyawan");
+        model.addColumn("Nama Karyawan");
+        model.addColumn("Tanggal");
+        model.addColumn("Status Kehadiran");
+        model.addColumn("Durasi Lembur");
+        
+        try
+        {
+            int no = 1;
+            // Query untuk mengambil seluruh data dari tabel presensi/mahasiswa kamu
+            String sql = "SELECT * FROM table_mhs";
+        
+        // Membuka koneksi menggunakan configDB() sesuai pola modul
+            java.sql.Connection conn = (Connection)Presensi.configDB();
+            java.sql.Statement stm = conn.createStatement();
+            java.sql.ResultSet res = stm.executeQuery(sql);
+        
+        // Memasukkan data dari database baris demi baris ke dalam tabel UI
+            while(res.next())
+            {
+                model.addRow(new Object[]{no++,res.getString(1), res.getString(2), res.getString(3),res.getString(4),res.getString(5)});
+            }
+            jTable1.setModel(model);
+            String sql_combo = "SELECT id_karyawan FROM table_karyawan";
+            java.sql.ResultSet res_combo = stm.executeQuery(sql_combo);
+            
+            jComboBox1.removeAllItems();
+            jComboBox1.addItem("- Pilih ID -");
+            
+            while(res_combo.next()){
+                jComboBox1.addItem(res_combo.getString("id_karyawan"));
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Gagal memuat data: " + e.getMessage());
+        }    
+    }
+        
+    
+    private void kosong(){
+        jComboBox1.setSelectedItem("- Pilih ID -");
+        jTextField2.setText(""); // Kolom Nama Karyawan
+        jTextField1.setText(""); // Kolom Tanggal (*YYYY-MM-DD)
+        jComboBox2.setSelectedItem("HADIR");
+        jTextField3.setText(""); // Kolom Durasi Lembur (Input lembur)
+        
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -429,14 +504,16 @@ public class Presensi extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonKembaliDB;
-    private javax.swing.JTextField inputIdPresensi;
-    private javax.swing.JTextField inputJam;
-    private javax.swing.JTextField inputJam1;
-    private javax.swing.JTextField inputNama;
+    private javax.swing.JButton buttonKembaliDB1;
+    private javax.swing.JButton buttonKembaliDB2;
+    private javax.swing.JButton buttonKembaliDB3;
+    private javax.swing.JButton buttonKembaliDB4;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -448,5 +525,7 @@ public class Presensi extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }
