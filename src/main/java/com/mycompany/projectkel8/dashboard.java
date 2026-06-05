@@ -64,13 +64,13 @@ public class dashboard extends javax.swing.JFrame {
         jButton1.setText("DATA KARYAWAN");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        buttonAbsensi.setBackground(new java.awt.Color(255, 51, 51));
+        buttonAbsensi.setBackground(new java.awt.Color(153, 204, 255));
         buttonAbsensi.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         buttonAbsensi.setForeground(new java.awt.Color(255, 255, 255));
         buttonAbsensi.setText("ABSENSI ");
         buttonAbsensi.addActionListener(this::buttonAbsensiActionPerformed);
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 102));
+        jButton3.setBackground(new java.awt.Color(204, 204, 204));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 102, 102));
         jButton3.setText("CETAK SLIP GAJI");
