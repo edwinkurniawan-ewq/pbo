@@ -5,8 +5,6 @@
 
 package com.mycompany.projectkel8;
 
-
-
 public class dashboard extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(dashboard.class.getName());
@@ -27,6 +25,7 @@ public class dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        JenisKaryawan = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         buttonAbsensi = new javax.swing.JButton();
@@ -43,8 +42,6 @@ public class dashboard extends javax.swing.JFrame {
         inputNama = new javax.swing.JTextField();
         inputTunjangan = new javax.swing.JTextField();
         inputGajiPokok = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
         boxJabatan = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -53,6 +50,10 @@ public class dashboard extends javax.swing.JFrame {
         buttonReset = new javax.swing.JButton();
         buttonSimpan = new javax.swing.JButton();
         buttonKembaliLogin = new javax.swing.JButton();
+        KaryawanTetap = new javax.swing.JRadioButton();
+        KaryawanKontak = new javax.swing.JRadioButton();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,7 +103,7 @@ public class dashboard extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Tunjangan (Rp) :");
+        jLabel10.setText("Tunjangan :");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -140,7 +141,6 @@ public class dashboard extends javax.swing.JFrame {
             }
         });
 
-        inputTunjangan.setText("Rp.");
         inputTunjangan.addCaretListener(this::inputTunjanganCaretUpdate);
         inputTunjangan.addActionListener(this::inputTunjanganActionPerformed);
         inputTunjangan.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -149,19 +149,21 @@ public class dashboard extends javax.swing.JFrame {
             }
         });
 
-        inputGajiPokok.setText("Rp.");
         inputGajiPokok.addCaretListener(this::inputGajiPokokCaretUpdate);
+        inputGajiPokok.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                inputGajiPokokFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                inputGajiPokokFocusLost(evt);
+            }
+        });
         inputGajiPokok.addActionListener(this::inputGajiPokokActionPerformed);
         inputGajiPokok.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 inputGajiPokokKeyTyped(evt);
             }
         });
-
-        jCheckBox1.setText("Tetap");
-        jCheckBox1.addActionListener(this::jCheckBox1ActionPerformed);
-
-        jCheckBox2.setText("Honor");
 
         boxJabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Jabatan--", "Supervisor", "Senior", "Reguler", "Magang" }));
         boxJabatan.addActionListener(this::boxJabatanActionPerformed);
@@ -229,6 +231,22 @@ public class dashboard extends javax.swing.JFrame {
         buttonKembaliLogin.setText("Kembali");
         buttonKembaliLogin.addActionListener(this::buttonKembaliLoginActionPerformed);
 
+        JenisKaryawan.add(KaryawanTetap);
+        KaryawanTetap.setText("Tetap");
+        KaryawanTetap.addActionListener(this::KaryawanTetapActionPerformed);
+
+        JenisKaryawan.add(KaryawanKontak);
+        KaryawanKontak.setText("Kontrak");
+        KaryawanKontak.addActionListener(this::KaryawanKontakActionPerformed);
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Rp");
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Rp");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -238,32 +256,46 @@ public class dashboard extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
+                                .addGap(17, 17, 17)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel11)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel6)))
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel10)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel2))))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(inputId, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(inputNama, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(inputTunjangan, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(inputGajiPokok, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jCheckBox1)
-                                .addGap(38, 38, 38)
-                                .addComponent(jCheckBox2)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(boxJabatan, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 266, Short.MAX_VALUE))
-                        .addGap(18, 18, 18))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(jLabel9)
+                                .addGap(9, 9, 9)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(inputId, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(inputNama, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(boxJabatan, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jComboBox2, 0, 1, Short.MAX_VALUE)
+                                                .addGap(258, 258, 258))
+                                            .addComponent(inputGajiPokok))
+                                        .addGap(18, 18, 18))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(KaryawanTetap, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(KaryawanKontak, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(inputTunjangan)
+                                .addGap(18, 18, 18))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(133, 133, 133)
                         .addComponent(buttonTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -271,7 +303,7 @@ public class dashboard extends javax.swing.JFrame {
                         .addComponent(buttonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 66, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -282,14 +314,16 @@ public class dashboard extends javax.swing.JFrame {
                                 .addComponent(jButton1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(buttonAbsensi)
                         .addGap(29, 29, 29)
                         .addComponent(buttonKembaliLogin)
                         .addGap(32, 32, 32)
-                        .addComponent(jButton3)))
-                .addGap(44, 44, 44))
+                        .addComponent(jButton3)
+                        .addGap(233, 233, 233))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,11 +334,11 @@ public class dashboard extends javax.swing.JFrame {
                     .addComponent(buttonKembaliLogin)
                     .addComponent(jButton3)
                     .addComponent(jButton1))
-                .addGap(80, 80, 80)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(inputId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -320,26 +354,35 @@ public class dashboard extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jCheckBox2))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel11))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(KaryawanTetap)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(KaryawanKontak)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(inputGajiPokok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(inputGajiPokok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
+                            .addComponent(jLabel12)
                             .addComponent(inputTunjangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22)
+                        .addGap(70, 70, 70)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(buttonTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(buttonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(buttonSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(buttonSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(26, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -355,10 +398,6 @@ public class dashboard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -455,8 +494,8 @@ public class dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         char c = evt.getKeyChar();
         String currentText = inputGajiPokok.getText();
-        if (!currentText.startsWith("Rp. ")){
-            inputGajiPokok.setText("Rp. ");
+        if (!currentText.startsWith(". ")){
+            inputGajiPokok.setText(". ");
             
         }
         if (inputGajiPokok.getCaretPosition() <= 4 && (c==java.awt.event.KeyEvent.VK_BACK_SPACE || c == java.awt.event.KeyEvent.VK_DELETE)){
@@ -481,8 +520,8 @@ public class dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         char c = evt.getKeyChar();
         String currentText = inputTunjangan.getText();
-        if (!currentText.startsWith("Rp. ")){
-            inputTunjangan.setText("Rp. ");
+        if (!currentText.startsWith(". ")){
+            inputTunjangan.setText(". ");
             
         }
         if (inputTunjangan.getCaretPosition() <= 4 && (c==java.awt.event.KeyEvent.VK_BACK_SPACE || c == java.awt.event.KeyEvent.VK_DELETE)){
@@ -505,14 +544,148 @@ public class dashboard extends javax.swing.JFrame {
 
     private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
         // TODO add your handling code here:
+    String id = inputId.getText().trim();
+    String nama = inputNama.getText().trim();
+    String jabatan = (String) boxJabatan.getSelectedItem();
+    String departemen = (String) jComboBox2.getSelectedItem();
+    String gajiText = inputGajiPokok.getText().trim();
+    String tunjanganText = inputTunjangan.getText().trim();
+    String jenisKaryawan = "";
+
+    // Validasi ID
+    if (id.isEmpty() || id.equals("Input id")) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "ID Karyawan tidak boleh kosong!", "Peringatan",
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Validasi Nama
+    if (nama.isEmpty() || nama.equals("Input nama")) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Nama Karyawan tidak boleh kosong!", "Peringatan",
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Validasi Jabatan
+    if (jabatan.equals("--Jabatan--")) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Pilih Jabatan terlebih dahulu!", "Peringatan",
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Validasi Departemen
+    if (departemen.equals("--Departemen--")) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Pilih Departemen terlebih dahulu!", "Peringatan",
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Validasi Jenis Karyawan
+    if (!KaryawanTetap.isSelected() && !KaryawanKontak.isSelected()) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Pilih Jenis Karyawan terlebih dahulu!", "Peringatan",
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    jenisKaryawan = KaryawanTetap.isSelected() ? "Tetap" : "Kontrak";
+
+    // Parse Gaji Pokok
+    double gajiPokok = 0;
+    try {
+        String gajiAngka = gajiText.replace(".", "").replace(". ", "").trim();
+        if (gajiAngka.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Gaji Pokok tidak boleh kosong!", "Peringatan",
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        gajiPokok = Double.parseDouble(gajiAngka);
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Format Gaji Pokok tidak valid!", "Error",
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Parse Tunjangan (hanya jika Tetap / field aktif)
+    double tunjangan = 0;
+    if (inputTunjangan.isEnabled()) {
+        try {
+            String tunjanganAngka = tunjanganText.replace("Rp.", "").replace("Rp. ", "").trim();
+            if (!tunjanganAngka.isEmpty()) {
+                tunjangan = Double.parseDouble(tunjanganAngka);
+            }
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Format Tunjangan tidak valid!", "Error",
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    }
+
+    // Tambahkan baris ke tabel
+    javax.swing.table.DefaultTableModel model =
+        (javax.swing.table.DefaultTableModel) jTable1.getModel();
+    model.addRow(new Object[]{
+        Integer.parseInt(id), nama, jabatan, departemen,
+        jenisKaryawan, gajiPokok, tunjangan
+    });
+
+    javax.swing.JOptionPane.showMessageDialog(this,
+        "Data karyawan berhasil ditambahkan!", "Berhasil",
+        javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_buttonTambahActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         // TODO add your handling code here:
+    inputId.setText("Input id");
+    inputId.setForeground(new java.awt.Color(204, 204, 204));
+
+    inputNama.setText("Input nama");
+    inputNama.setForeground(new java.awt.Color(204, 204, 204));
+
+    // Reset ComboBox
+    boxJabatan.setSelectedIndex(0);
+    jComboBox2.setSelectedIndex(0);
+
+    // Reset RadioButton
+    JenisKaryawan.clearSelection();
+
+    // Reset Gaji & Tunjangan
+    inputGajiPokok.setText(". ");
+    inputTunjangan.setText(". ");
+    inputTunjangan.setEnabled(true);
+    inputTunjangan.setBackground(java.awt.Color.WHITE);
+    inputTunjangan.setForeground(java.awt.Color.BLACK);
     }//GEN-LAST:event_buttonResetActionPerformed
 
     private void buttonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSimpanActionPerformed
         // TODO add your handling code here:
+        javax.swing.table.DefaultTableModel model =
+        (javax.swing.table.DefaultTableModel) jTable1.getModel();
+
+    // Hitung baris yang tidak kosong
+    int jumlahData = 0;
+    for (int i = 0; i < model.getRowCount(); i++) {
+        if (model.getValueAt(i, 1) != null) {
+            jumlahData++;
+        }
+    }
+
+    if (jumlahData == 0) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Tidak ada data untuk disimpan!", "Peringatan",
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    javax.swing.JOptionPane.showMessageDialog(this,
+        jumlahData + " data karyawan telah tersimpan!", "Simpan Berhasil",
+        javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_buttonSimpanActionPerformed
 
     private void buttonKembaliLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKembaliLoginActionPerformed
@@ -523,6 +696,31 @@ public class dashboard extends javax.swing.JFrame {
         this.dispose();
                        
     }//GEN-LAST:event_buttonKembaliLoginActionPerformed
+
+    private void KaryawanTetapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KaryawanTetapActionPerformed
+        // TODO add your handling code here:
+    inputTunjangan.setEnabled(true);
+    inputTunjangan.setBackground(java.awt.Color.WHITE);
+    inputTunjangan.setText(" ");
+    inputTunjangan.setForeground(java.awt.Color.BLACK);
+    }//GEN-LAST:event_KaryawanTetapActionPerformed
+
+    private void KaryawanKontakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KaryawanKontakActionPerformed
+        // TODO add your handling code here:
+    inputTunjangan.setEnabled(false);
+    inputTunjangan.setText("0.");
+    inputTunjangan.setBackground(new java.awt.Color(204, 204, 204));
+    inputTunjangan.setForeground(java.awt.Color.GRAY);
+        
+    }//GEN-LAST:event_KaryawanKontakActionPerformed
+
+    private void inputGajiPokokFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputGajiPokokFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputGajiPokokFocusGained
+
+    private void inputGajiPokokFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputGajiPokokFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputGajiPokokFocusLost
 
     /**
      * @param args the command line arguments
@@ -550,6 +748,9 @@ public class dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup JenisKaryawan;
+    private javax.swing.JRadioButton KaryawanKontak;
+    private javax.swing.JRadioButton KaryawanTetap;
     private javax.swing.JComboBox<String> boxJabatan;
     private javax.swing.JButton buttonAbsensi;
     private javax.swing.JButton buttonKembaliLogin;
@@ -562,19 +763,20 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField inputTunjangan;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
+
