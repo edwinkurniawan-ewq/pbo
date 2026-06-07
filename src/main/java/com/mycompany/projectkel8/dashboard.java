@@ -754,6 +754,7 @@ public void load_table(){
     public javax.swing.JRadioButton getKaryawanKontak() { return KaryawanKontak; }
     public javax.swing.ButtonGroup getJenisKaryawan() { return jenisKaryawan; }
     public javax.swing.JTable getjTable1() { return jTable1; }
+    
     /**
      * @param args the command line arguments
      */

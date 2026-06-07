@@ -49,7 +49,10 @@ public class Presensi extends javax.swing.JFrame {
         buttonKembaliDB3.addActionListener(aksi);
         jButton3.addActionListener(aksi);
 
-        buttonKembaliDB.addActionListener(e -> this.dispose());
+        buttonKembaliDB.addActionListener(e -> {
+            new dashboard().setVisible(true);
+            this.dispose();
+        });
 
         load_table();
     }
@@ -60,139 +63,151 @@ public class Presensi extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        // --- komponen yang muncul di panel (visual) ---
-        jPanel1          = new javax.swing.JPanel();
-        buttonKembaliDB  = new javax.swing.JButton();
-        jButton2         = new javax.swing.JButton();
-        jButton3         = new javax.swing.JButton();
-        jLabel1          = new javax.swing.JLabel();
-        jLabel2          = new javax.swing.JLabel();
-        jLabel4          = new javax.swing.JLabel();
-        jScrollPane1     = new javax.swing.JScrollPane();
-        jTable1          = new javax.swing.JTable();
-        jLabel7          = new javax.swing.JLabel();
-        jLabel8          = new javax.swing.JLabel();
-        jLabel3          = new javax.swing.JLabel();
-        jLabel9          = new javax.swing.JLabel();
-        buttonKembaliDB1 = new javax.swing.JButton();   // Tambah
-        buttonKembaliDB2 = new javax.swing.JButton();   // Edit
-        buttonKembaliDB3 = new javax.swing.JButton();   // Clear
-        buttonKembaliDB4 = new javax.swing.JButton();   // Delete/Hapus
-        jComboBox1       = new javax.swing.JComboBox<>();
-        jTextField3      = new javax.swing.JTextField();
-        jDateChooser1    = new com.toedter.calendar.JDateChooser();
-        boxNama          = new javax.swing.JComboBox<>();
-        jLabel5          = new javax.swing.JLabel();
-        // CheckBox status kehadiran — ditampilkan di dalam panel
-        jCheckBox1       = new javax.swing.JCheckBox();
-        jCheckBox2       = new javax.swing.JCheckBox();
+        jPanel1 = new javax.swing.JPanel();
+        buttonKembaliDB = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        boxNama = new javax.swing.JComboBox<>();
+        jTextField3 = new javax.swing.JTextField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        buttonKembaliDB1 = new javax.swing.JButton();
+        buttonKembaliDB2 = new javax.swing.JButton();
+        buttonKembaliDB3 = new javax.swing.JButton();
+        buttonKembaliDB4 = new javax.swing.JButton();
 
-        // --- teks & perilaku checkbox ---
-        jCheckBox1.setText("Hadir");
-        jCheckBox2.setText("Absen");
-        // mutual exclusive: pilih satu otomatis membatalkan yang lain
-        jCheckBox1.addActionListener(e -> { if (jCheckBox1.isSelected()) jCheckBox2.setSelected(false); });
-        jCheckBox2.addActionListener(e -> { if (jCheckBox2.isSelected()) jCheckBox1.setSelected(false); });
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Presensi Harian Karyawan");
 
-        // --- panel utama ---
         jPanel1.setBackground(new java.awt.Color(153, 204, 255));
 
-        // --- tombol header ---
         buttonKembaliDB.setBackground(new java.awt.Color(153, 153, 255));
-        buttonKembaliDB.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        buttonKembaliDB.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         buttonKembaliDB.setForeground(new java.awt.Color(255, 255, 255));
         buttonKembaliDB.setText("Kembali");
+        buttonKembaliDB.addActionListener(this::buttonKembaliDBActionPerformed);
 
         jButton2.setBackground(new java.awt.Color(51, 153, 255));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Simpan");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         jButton3.setBackground(new java.awt.Color(255, 153, 51));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Cetak Slip Gaji");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
 
-        // --- label ---
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("PENCATATAN PRESENSI HARIAN");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Tanggal :");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16));
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("REKAPITULASI ABSEN");
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Nama :");
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Status Kehadiran :");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("ID Karyawan :");
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Jabatan :");
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("REKAPITULASI ABSEN");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 12));
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("(otomatis)");
 
-        // --- tombol aksi (baris bawah form) ---
-        // buttonKembaliDB1 = Tambah
-        buttonKembaliDB1.setBackground(new java.awt.Color(51, 204, 51));
-        buttonKembaliDB1.setFont(new java.awt.Font("Segoe UI", 1, 14));
-        buttonKembaliDB1.setForeground(new java.awt.Color(255, 255, 255));
-        buttonKembaliDB1.setText("Tambah");
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Nama :");
 
-        // buttonKembaliDB2 = Edit
-        buttonKembaliDB2.setBackground(new java.awt.Color(255, 204, 0));
-        buttonKembaliDB2.setFont(new java.awt.Font("Segoe UI", 1, 14));
-        buttonKembaliDB2.setForeground(new java.awt.Color(255, 255, 255));
-        buttonKembaliDB2.setText("Edit");
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Status Kehadiran :");
 
-        // buttonKembaliDB3 = Clear
-        buttonKembaliDB3.setBackground(new java.awt.Color(153, 153, 153));
-        buttonKembaliDB3.setFont(new java.awt.Font("Segoe UI", 1, 14));
-        buttonKembaliDB3.setForeground(new java.awt.Color(255, 255, 255));
-        buttonKembaliDB3.setText("Clear");
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Jabatan :");
 
-        // buttonKembaliDB4 = Hapus/Delete
-        buttonKembaliDB4.setBackground(new java.awt.Color(255, 51, 51));
-        buttonKembaliDB4.setFont(new java.awt.Font("Segoe UI", 1, 14));
-        buttonKembaliDB4.setForeground(new java.awt.Color(255, 255, 255));
-        buttonKembaliDB4.setText("Hapus");
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        // --- tabel ---
-        jTable1.setModel(new DefaultTableModel(
-            new Object[][]{},
-            new String[]{"ID Presensi", "ID Karyawan", "Nama Karyawan", "Tanggal", "Status Kehadiran", "Durasi Lembur"}
-        ));
+            },
+            new String [] {
+                "ID Presensi", "ID Karyawan", "Nama Karyawan", "Tanggal", "Status Kehadiran", "Durasi Lembur"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        // Sembunyikan kolom 0 (id_presensi) dari tampilan — tetap ada untuk referensi
-        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
-        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
-        jTable1.getColumnModel().getColumn(0).setWidth(0);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        // --- listener combo box ---
-        boxNama.addActionListener(this::boxNamaActionPerformed);
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Pilih ID Karyawan-" }));
         jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
 
-        // =========================================================
-        // LAYOUT
-        // =========================================================
+        boxNama.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Pilih Nama Karyawan-" }));
+        boxNama.addActionListener(this::boxNamaActionPerformed);
+
+        jTextField3.setEditable(false);
+
+        jCheckBox1.setText("Hadir");
+        jCheckBox1.addActionListener(this::jCheckBox1ActionPerformed);
+
+        jCheckBox2.setText("Absen");
+        jCheckBox2.addActionListener(this::jCheckBox2ActionPerformed);
+
+        buttonKembaliDB1.setBackground(new java.awt.Color(51, 204, 51));
+        buttonKembaliDB1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonKembaliDB1.setForeground(new java.awt.Color(255, 255, 255));
+        buttonKembaliDB1.setText("Tambah");
+        buttonKembaliDB1.addActionListener((evt) -> {
+            buttonKembaliDB1ActionPerformed(evt);
+            tesTambah(evt);
+        });
+
+        buttonKembaliDB2.setBackground(new java.awt.Color(255, 204, 0));
+        buttonKembaliDB2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonKembaliDB2.setForeground(new java.awt.Color(255, 255, 255));
+        buttonKembaliDB2.setText("Edit");
+        buttonKembaliDB2.addActionListener(this::buttonKembaliDB2ActionPerformed);
+
+        buttonKembaliDB3.setBackground(new java.awt.Color(153, 153, 153));
+        buttonKembaliDB3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonKembaliDB3.setForeground(new java.awt.Color(255, 255, 255));
+        buttonKembaliDB3.setText("Clear");
+        buttonKembaliDB3.addActionListener(this::buttonKembaliDB3ActionPerformed);
+
+        buttonKembaliDB4.setBackground(new java.awt.Color(255, 51, 51));
+        buttonKembaliDB4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonKembaliDB4.setForeground(new java.awt.Color(255, 255, 255));
+        buttonKembaliDB4.setText("Hapus");
+        buttonKembaliDB4.addActionListener(this::buttonKembaliDB4ActionPerformed);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -203,45 +218,39 @@ public class Presensi extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3,  javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                            .addComponent(jLabel7,  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel9,  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2,  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel8,  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        )
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel8))
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1,    0, 200, Short.MAX_VALUE)
-                            .addComponent(boxNama,       0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(boxNama, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField3, 0, 150, Short.MAX_VALUE)
+                                .addComponent(jTextField3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(5, 5, 5)
                                 .addComponent(jLabel5))
                             .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jCheckBox1)
                                 .addGap(20, 20, 20)
-                                .addComponent(jCheckBox2))
-                        )
-                    )
-                    // Baris tombol aksi: Tambah | Edit | Hapus | Clear | Cetak | Kembali
+                                .addComponent(jCheckBox2))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(buttonKembaliDB1,  90,  90,  90)
+                        .addComponent(buttonKembaliDB1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(buttonKembaliDB2,  80,  80,  80)
+                        .addComponent(buttonKembaliDB2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(buttonKembaliDB4,  80,  80,  80)
+                        .addComponent(buttonKembaliDB4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(buttonKembaliDB3,  80,  80,  80)
+                        .addComponent(buttonKembaliDB3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jButton3,         150, 150, 150)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
-                        .addComponent(buttonKembaliDB,  100, 100, 100)
-                    )
+                        .addComponent(buttonKembaliDB, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4)
-                    .addComponent(jScrollPane1, 750, 750, 750)
-                )
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +290,7 @@ public class Presensi extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel4)
                 .addGap(5, 5, 5)
-                .addComponent(jScrollPane1, 200, 250, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, Short.MAX_VALUE)
                 .addGap(15, 15, 15))
         );
 
@@ -293,10 +302,18 @@ public class Presensi extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tesTambah(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tesTambah
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tesTambah
 
 
     // =========================================================
@@ -521,14 +538,14 @@ public class Presensi extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> boxNama;
     private javax.swing.JButton buttonKembaliDB;
-    private javax.swing.JButton buttonKembaliDB1;  // Tambah
-    private javax.swing.JButton buttonKembaliDB2;  // Edit
-    private javax.swing.JButton buttonKembaliDB3;  // Clear
-    private javax.swing.JButton buttonKembaliDB4;  // Hapus
-    private javax.swing.JButton jButton2;          // Simpan (alternatif)
-    private javax.swing.JButton jButton3;          // Cetak Slip Gaji
-    private javax.swing.JCheckBox jCheckBox1;      // Hadir
-    private javax.swing.JCheckBox jCheckBox2;      // Absen
+    private javax.swing.JButton buttonKembaliDB1;
+    private javax.swing.JButton buttonKembaliDB2;
+    private javax.swing.JButton buttonKembaliDB3;
+    private javax.swing.JButton buttonKembaliDB4;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
