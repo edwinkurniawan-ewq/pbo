@@ -60,7 +60,7 @@ public class dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        JenisKaryawan = new javax.swing.ButtonGroup();
+        jenisKaryawan = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         buttonAbsensi = new javax.swing.JButton();
@@ -83,12 +83,14 @@ public class dashboard extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         buttonTambah = new javax.swing.JButton();
         buttonReset = new javax.swing.JButton();
-        buttonSimpan = new javax.swing.JButton();
+        buttonRefresh = new javax.swing.JButton();
         buttonKembaliLogin = new javax.swing.JButton();
         KaryawanTetap = new javax.swing.JRadioButton();
         KaryawanKontak = new javax.swing.JRadioButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        buttonHapus = new javax.swing.JButton();
+        buttonEdit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -219,7 +221,7 @@ public class dashboard extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, true, true, true
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -228,6 +230,11 @@ public class dashboard extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -253,12 +260,12 @@ public class dashboard extends javax.swing.JFrame {
         buttonReset.setActionCommand("+Tambah");
         buttonReset.addActionListener(this::buttonResetActionPerformed);
 
-        buttonSimpan.setBackground(new java.awt.Color(255, 255, 102));
-        buttonSimpan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        buttonSimpan.setForeground(new java.awt.Color(255, 102, 102));
-        buttonSimpan.setText("Simpan");
-        buttonSimpan.setActionCommand("+Tambah");
-        buttonSimpan.addActionListener(this::buttonSimpanActionPerformed);
+        buttonRefresh.setBackground(new java.awt.Color(255, 255, 102));
+        buttonRefresh.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        buttonRefresh.setForeground(new java.awt.Color(255, 102, 102));
+        buttonRefresh.setText("Refresh");
+        buttonRefresh.setActionCommand("+Tambah");
+        buttonRefresh.addActionListener(this::buttonRefreshActionPerformed);
 
         buttonKembaliLogin.setBackground(new java.awt.Color(255, 51, 51));
         buttonKembaliLogin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -266,11 +273,11 @@ public class dashboard extends javax.swing.JFrame {
         buttonKembaliLogin.setText("Kembali");
         buttonKembaliLogin.addActionListener(this::buttonKembaliLoginActionPerformed);
 
-        JenisKaryawan.add(KaryawanTetap);
+        jenisKaryawan.add(KaryawanTetap);
         KaryawanTetap.setText("Tetap");
         KaryawanTetap.addActionListener(this::KaryawanTetapActionPerformed);
 
-        JenisKaryawan.add(KaryawanKontak);
+        jenisKaryawan.add(KaryawanKontak);
         KaryawanKontak.setText("Kontrak");
         KaryawanKontak.addActionListener(this::KaryawanKontakActionPerformed);
 
@@ -281,6 +288,30 @@ public class dashboard extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Rp");
+
+        buttonHapus.setBackground(new java.awt.Color(255, 255, 102));
+        buttonHapus.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        buttonHapus.setForeground(new java.awt.Color(255, 102, 102));
+        buttonHapus.setText("Hapus");
+        buttonHapus.setActionCommand("+Tambah");
+        buttonHapus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonHapusMouseClicked(evt);
+            }
+        });
+        buttonHapus.addActionListener(this::buttonHapusActionPerformed);
+
+        buttonEdit.setBackground(new java.awt.Color(255, 255, 102));
+        buttonEdit.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        buttonEdit.setForeground(new java.awt.Color(255, 102, 102));
+        buttonEdit.setText("Edit");
+        buttonEdit.setActionCommand("+Tambah");
+        buttonEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonEditMouseClicked(evt);
+            }
+        });
+        buttonEdit.addActionListener(this::buttonEditActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -296,47 +327,33 @@ public class dashboard extends javax.swing.JFrame {
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel11)
                                     .addComponent(jLabel6)
-                                    .addComponent(jLabel10)))
+                                    .addComponent(jLabel10)
+                                    .addComponent(buttonTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(buttonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel2))))
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel9)
+                        .addGap(9, 9, 9)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel9)
-                                .addGap(9, 9, 9)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(inputId, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(inputNama, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(boxJabatan, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(inputGajiPokok)
-                                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGap(18, 18, 18))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(KaryawanTetap, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(KaryawanKontak, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(inputId, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(inputNama, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(boxJabatan, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(inputGajiPokok)
+                                    .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 305, Short.MAX_VALUE))
+                                .addGap(18, 18, 18))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(inputTunjangan)
-                                .addGap(18, 18, 18))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
-                        .addComponent(buttonTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(buttonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 66, Short.MAX_VALUE))
+                                .addGap(6, 6, 6)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(KaryawanTetap, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(KaryawanKontak, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -345,18 +362,32 @@ public class dashboard extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(23, 23, 23)
                                 .addComponent(jButton1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(119, 119, 119)
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(inputTunjangan))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(131, 131, 131)
+                                .addComponent(buttonHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(buttonRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(buttonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(buttonAbsensi)
                         .addGap(29, 29, 29)
                         .addComponent(buttonKembaliLogin)
                         .addGap(32, 32, 32)
-                        .addComponent(jButton3)
-                        .addGap(233, 233, 233))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23))))
+                        .addComponent(jButton3))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -367,9 +398,9 @@ public class dashboard extends javax.swing.JFrame {
                     .addComponent(buttonKembaliLogin)
                     .addComponent(jButton3)
                     .addComponent(jButton1))
+                .addGap(80, 80, 80)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -406,16 +437,16 @@ public class dashboard extends javax.swing.JFrame {
                             .addComponent(jLabel10)
                             .addComponent(jLabel12)
                             .addComponent(inputTunjangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(70, 70, 70)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(buttonTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(buttonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(buttonSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(26, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))))
+                            .addComponent(buttonRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -432,38 +463,45 @@ public class dashboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 private void load_table(){
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Id Karyawan");
-        model.addColumn("Nama Karyawan");
-        model.addColumn("Jabatan");
-        model.addColumn("Departemen");
-        model.addColumn("Jenis Karyawan");
-        model.addColumn("Gaji Pokok");
-        model.addColumn("Tunjangan");
-        
-        try {
-            Connection conn = Koneksi.configDB();
-            Statement stm = conn.createStatement();
-            // Disarankan menggunakan huruf kecil "karyawan" sesuai nama tabel phpMyAdmin
-            ResultSet res = stm.executeQuery("SELECT * FROM karyawan");
-        
-            while(res.next()){
-                model.addRow(new Object[]{
-                    res.getString("id_karyawan"), // Pastikan k-nya kecil sesuai database
-                    res.getString("nama_karyawan"),
-                    res.getString("jabatan"),
-                    res.getString("departemen"),
-                    res.getString("jenis_karyawan"),
-                    res.getInt("gaji_pokok"),
-                    res.getInt("tunjangan"),
-                });  
-            }
-            jTable1.setModel(model);
-        } catch (Exception e){
-            // Perbaikan typo e.getMessage menjadi e.getMessage()
-            JOptionPane.showMessageDialog(this, "Gagal memuat data: " + e.getMessage());
+    // Tambahkan tanda kurung kurawal {} setelah membuat objek untuk melakukan override method
+    DefaultTableModel model = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            // Mengembalikan nilai false agar SEMUA baris dan kolom tidak bisa diedit langsung
+            return false;
         }
+    };
+    
+    // Menambahkan kolom seperti biasa
+    model.addColumn("Id Karyawan");
+    model.addColumn("Nama Karyawan");
+    model.addColumn("Jabatan");
+    model.addColumn("Departemen");
+    model.addColumn("Jenis Karyawan");
+    model.addColumn("Gaji Pokok");
+    model.addColumn("Tunjangan");
+    
+    try {
+        java.sql.Connection conn = Koneksi.configDB();
+        java.sql.Statement stm = conn.createStatement();
+        java.sql.ResultSet res = stm.executeQuery("SELECT * FROM karyawan");
+    
+        while(res.next()){
+            model.addRow(new Object[]{
+                res.getString("id_karyawan"), 
+                res.getString("nama_karyawan"),
+                res.getString("jabatan"),
+                res.getString("departemen"),
+                res.getString("jenis_karyawan"),
+                res.getInt("gaji_pokok"),
+                res.getInt("tunjangan"),
+            });  
+        }
+        jTable1.setModel(model);
+    } catch (Exception e){
+        javax.swing.JOptionPane.showMessageDialog(this, "Gagal memuat data: " + e.getMessage());
     }
+}
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -611,126 +649,6 @@ private void load_table(){
         }
     }//GEN-LAST:event_inputTunjanganCaretUpdate
 
-    private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
-        // TODO add your handling code here:
-    String id = inputId.getText().trim();
-    String nama = inputNama.getText().trim();
-    String jabatan = (String) boxJabatan.getSelectedItem();
-    String departemen = (String) jComboBox2.getSelectedItem();
-    String gajiText = inputGajiPokok.getText().trim();
-    String tunjanganText = inputTunjangan.getText().trim();
-    String jenisKaryawan = "";
-
-    // Validasi ID
-    if (id.isEmpty() || id.equals("Input id")) {
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "ID Karyawan tidak boleh kosong!", "Peringatan",
-            javax.swing.JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // Validasi Nama
-    if (nama.isEmpty() || nama.equals("Input nama")) {
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "Nama Karyawan tidak boleh kosong!", "Peringatan",
-            javax.swing.JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // Validasi Jabatan
-    if (jabatan.equals("--Jabatan--")) {
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "Pilih Jabatan terlebih dahulu!", "Peringatan",
-            javax.swing.JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // Validasi Departemen
-    if (departemen.equals("--Departemen--")) {
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "Pilih Departemen terlebih dahulu!", "Peringatan",
-            javax.swing.JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // Validasi Jenis Karyawan
-    if (!KaryawanTetap.isSelected() && !KaryawanKontak.isSelected()) {
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "Pilih Jenis Karyawan terlebih dahulu!", "Peringatan",
-            javax.swing.JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    jenisKaryawan = KaryawanTetap.isSelected() ? "Tetap" : "Kontrak";
-
-    // Parse Gaji Pokok
-    double gajiPokok = 0;
-    try {
-        String gajiAngka = gajiText.replace(".", "").replace(". ", "").trim();
-        if (gajiAngka.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "Gaji Pokok tidak boleh kosong!", "Peringatan",
-                javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        gajiPokok = Double.parseDouble(gajiAngka);
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "Format Gaji Pokok tidak valid!", "Error",
-            javax.swing.JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Parse Tunjangan (hanya jika Tetap / field aktif)
-    double tunjangan = 0;
-    if (inputTunjangan.isEnabled()) {
-        try {
-            String tunjanganAngka = tunjanganText.replace("Rp.", "").replace("Rp. ", "").trim();
-            if (!tunjanganAngka.isEmpty()) {
-                tunjangan = Double.parseDouble(tunjanganAngka);
-            }
-        } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "Format Tunjangan tidak valid!", "Error",
-                javax.swing.JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-    }
-
-    // Tambahkan baris ke tabel
-    javax.swing.table.DefaultTableModel model =
-        (javax.swing.table.DefaultTableModel) jTable1.getModel();
-    try{
-        Connection conn = Koneksi.configDB();
-        String sql = "INSERT INTO karyawan (id_karyawan, nama_karyawan, jabatan, departemen, jenis_karyawan, gaji_pokok, tunjangan) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement pst = conn.prepareStatement(sql);
-        
-        pst.setString(1, id);
-        pst.setString(2, nama);
-        pst.setString(3, jabatan);
-        pst.setString(4, departemen);
-        pst.setString(5, jenisKaryawan);
-        pst.setDouble(6, gajiPokok);
-        pst.setDouble(7, tunjangan);
-        
-        pst.execute();
-        
-        javax.swing.JOptionPane.showMessageDialog(this,
-                "Data karyawan berhasil ditambahkan", "Berhasil", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-       
-        
-        load_table();
-        buttonResetActionPerformed(null);
-        
-    } catch (Exception e){
-        javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan ke database: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
-        
-        
-    javax.swing.JOptionPane.showMessageDialog(this,
-        "Data karyawan berhasil ditambahkan!", "Berhasil",
-        javax.swing.JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_buttonTambahActionPerformed
-
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         // TODO add your handling code here:
     inputId.setText("Input id");
@@ -744,7 +662,7 @@ private void load_table(){
     jComboBox2.setSelectedIndex(0);
 
     // Reset RadioButton
-    JenisKaryawan.clearSelection();
+    jenisKaryawan.clearSelection();
 
     // Reset Gaji & Tunjangan
     inputGajiPokok.setText(". ");
@@ -754,7 +672,7 @@ private void load_table(){
     inputTunjangan.setForeground(java.awt.Color.BLACK);
     }//GEN-LAST:event_buttonResetActionPerformed
 
-    private void buttonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSimpanActionPerformed
+    private void buttonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRefreshActionPerformed
         // TODO add your handling code here:
         load_table();
         
@@ -762,7 +680,7 @@ private void load_table(){
         javax.swing.JOptionPane.showMessageDialog(this,
             "Seluruh data (" + totalBaris + " karyawan)", "Informasi",
             javax.swing.JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_buttonSimpanActionPerformed
+    }//GEN-LAST:event_buttonRefreshActionPerformed
 
     private void buttonKembaliLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKembaliLoginActionPerformed
         // TODO add your handling code here:
@@ -798,6 +716,243 @@ private void load_table(){
         // TODO add your handling code here:
     }//GEN-LAST:event_inputGajiPokokFocusLost
 
+    private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
+        // TODO add your handling code here:
+        String id = inputId.getText().trim();
+        String nama = inputNama.getText().trim();
+        String jabatan = (String) boxJabatan.getSelectedItem();
+        String departemen = (String) jComboBox2.getSelectedItem();
+        String gajiText = inputGajiPokok.getText().trim();
+        String tunjanganText = inputTunjangan.getText().trim();
+        String jenisKaryawan = "";
+
+        // Validasi ID
+        if (id.isEmpty() || id.equals("Input id")) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "ID Karyawan tidak boleh kosong!", "Peringatan",
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Validasi Nama
+        if (nama.isEmpty() || nama.equals("Input nama")) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Nama Karyawan tidak boleh kosong!", "Peringatan",
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Validasi Jabatan
+        if (jabatan.equals("--Jabatan--")) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Pilih Jabatan terlebih dahulu!", "Peringatan",
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Validasi Departemen
+        if (departemen.equals("--Departemen--")) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Pilih Departemen terlebih dahulu!", "Peringatan",
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Validasi Jenis Karyawan
+        if (!KaryawanTetap.isSelected() && !KaryawanKontak.isSelected()) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Pilih Jenis Karyawan terlebih dahulu!", "Peringatan",
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        jenisKaryawan = KaryawanTetap.isSelected() ? "Tetap" : "Kontrak";
+
+        // Parse Gaji Pokok
+        double gajiPokok = 0;
+        try {
+            String gajiAngka = gajiText.replace(".", "").replace(". ", "").trim();
+            if (gajiAngka.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                    "Gaji Pokok tidak boleh kosong!", "Peringatan",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            gajiPokok = Double.parseDouble(gajiAngka);
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Format Gaji Pokok tidak valid!", "Error",
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Parse Tunjangan (hanya jika Tetap / field aktif)
+        double tunjangan = 0;
+        if (inputTunjangan.isEnabled()) {
+            try {
+                String tunjanganAngka = tunjanganText.replace("Rp.", "").replace("Rp. ", "").trim();
+                if (!tunjanganAngka.isEmpty()) {
+                    tunjangan = Double.parseDouble(tunjanganAngka);
+                }
+            } catch (NumberFormatException e) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                    "Format Tunjangan tidak valid!", "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        // Tambahkan baris ke tabel
+        javax.swing.table.DefaultTableModel model =
+        (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        try{
+            Connection conn = Koneksi.configDB();
+            String sql = "INSERT INTO karyawan (id_karyawan, nama_karyawan, jabatan, departemen, jenis_karyawan, gaji_pokok, tunjangan) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            pst.setString(1, id);
+            pst.setString(2, nama);
+            pst.setString(3, jabatan);
+            pst.setString(4, departemen);
+            pst.setString(5, jenisKaryawan);
+            pst.setDouble(6, gajiPokok);
+            pst.setDouble(7, tunjangan);
+
+            pst.execute();
+
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Data karyawan berhasil ditambahkan", "Berhasil", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+            load_table();
+            buttonResetActionPerformed(null);
+
+        } catch (Exception e){
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan ke database: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Data karyawan berhasil ditambahkan!", "Berhasil",
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_buttonTambahActionPerformed
+
+    private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
+        // TODO add your handling code here:
+        if (inputId.getText().equals("Input id") || inputId.getText().trim().isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Silakan pilih data pada tabel terlebih dahulu!");
+        return;
+    }
+    
+    // 2. Membuat konfirmasi (Pop-up) "Apakah anda yakin?" demi keamanan data
+    int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "Apakah Anda yakin ingin menghapus karyawan dengan ID " + inputId.getText() + "?", 
+            "Konfirmasi Hapus", 
+            javax.swing.JOptionPane.YES_NO_OPTION);
+            
+    if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
+        try {
+            
+            java.sql.Connection conn = Koneksi.configDB();
+            
+            // Query SQL Delete berdasarkan id_karyawan
+            String sql = "DELETE FROM karyawan WHERE id_karyawan = ?";
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            
+
+            pst.setString(1, inputId.getText());
+            
+            int hasil = pst.executeUpdate();
+            
+            if (hasil > 0) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus!");
+                
+      
+                buttonResetActionPerformed(null); 
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(null, "Data tidak ditemukan di database.");
+            }
+            
+        } catch (java.sql.SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal menghapus data: " + e.getMessage());
+        }
+    }
+        
+            
+    }//GEN-LAST:event_buttonHapusActionPerformed
+
+    private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
+        // TODO add your handling code here:
+        if (inputId.getText().equals("Input id") || inputId.getText().trim().isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Silakan pilih data pada tabel yang ingin diubah terlebih dahulu!");
+        return;
+    }
+    
+    try {
+       
+        java.sql.Connection conn = Koneksi.configDB();
+        
+      
+        String sql = "UPDATE karyawan SET nama_karyawan = ?, jabatan = ?, departemen = ?, jenis_karyawan = ?, gaji_pokok = ?, tunjangan = ? WHERE id_karyawan = ?";
+        
+        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+        
+        pst.setString(1, inputNama.getText());
+        pst.setString(2, boxJabatan.getSelectedItem().toString());
+        pst.setString(3, jComboBox2.getSelectedItem().toString());
+        
+     
+        String jenisKaryawan = jenisKaryawan.isSelected() ? "Tetap" : "Honor";
+        pst.setString(4, jenisKaryawan);
+        
+        // Membersihkan format string "Rp." dan titik agar bisa masuk ke database sebagai angka (int)
+        String gaji = inputGajiPokok.getText().replace("Rp. ", "").replace(".", "").trim();
+        String tunjangan = inputTunjangan.getText().replace("Rp. ", "").replace(".", "").trim();
+        
+        pst.setInt(5, Integer.parseInt(gaji));
+        pst.setInt(6, Integer.parseInt(tunjangan));
+        
+
+        pst.setString(7, inputId.getText());
+        
+
+        int hasil = pst.executeUpdate();
+        
+        if (hasil > 0) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Data Karyawan Berhasil Diperbarui!");
+            
+            // 5. Refresh kembali tabel agar data yang berubah langsung kelihatan
+            load_table(); 
+            
+            // 6. Kosongkan/Reset kembali form inputan
+            buttonResetActionPerformed(null); 
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(null, "Gagal memperbarui, ID Karyawan tidak ditemukan.");
+        }
+        
+    } catch (java.sql.SQLException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Gagal mengubah data ke database: " + e.getMessage());
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Format angka pada Gaji Pokok atau Tunjangan salah!");
+    }
+    }//GEN-LAST:event_buttonEditActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int baris = jTable1.rowAtPoint(evt.getPoint());
+        
+        String id = jTable1.getValueAt(baris, 0).toString();
+        inputId.setText(id);
+        
+        String nama = jTable1.getValueAt(baris, 1).toString();
+        inputNama.setText(nama);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void buttonHapusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonHapusMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonHapusMouseClicked
+
+    private void buttonEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonEditMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonEditMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -824,14 +979,15 @@ private void load_table(){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup JenisKaryawan;
     private javax.swing.JRadioButton KaryawanKontak;
     private javax.swing.JRadioButton KaryawanTetap;
     private javax.swing.JComboBox<String> boxJabatan;
     private javax.swing.JButton buttonAbsensi;
+    private javax.swing.JButton buttonEdit;
+    private javax.swing.JButton buttonHapus;
     private javax.swing.JButton buttonKembaliLogin;
+    private javax.swing.JButton buttonRefresh;
     private javax.swing.JButton buttonReset;
-    private javax.swing.JButton buttonSimpan;
     private javax.swing.JButton buttonTambah;
     private javax.swing.JTextField inputGajiPokok;
     private javax.swing.JTextField inputId;
@@ -853,6 +1009,7 @@ private void load_table(){
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.ButtonGroup jenisKaryawan;
     // End of variables declaration//GEN-END:variables
 }
 
