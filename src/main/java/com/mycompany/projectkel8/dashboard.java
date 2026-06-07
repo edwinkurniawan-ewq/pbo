@@ -12,6 +12,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import com.mycompany.projectkel8.model.KaryawanModel;
+import com.mycompany.projectkel8.controller.KaryawanController;
+import com.mycompany.projectkel8.controller.FungsiButton;
 
 public class dashboard extends javax.swing.JFrame {
     
@@ -22,6 +25,24 @@ public class dashboard extends javax.swing.JFrame {
      */
     public dashboard() {
         initComponents();
+        
+    com.mycompany.projectkel8.controller.FungsiButton aksi = new com.mycompany.projectkel8.controller.FungsiButton(this);
+    
+    buttonTambah.setActionCommand("TAMBAH");
+    buttonEdit.setActionCommand("EDIT");
+    buttonHapus.setActionCommand("HAPUS");
+    buttonReset.setActionCommand("RESET");
+    buttonRefresh.setActionCommand("REFRESH");
+    
+    buttonTambah.addActionListener(aksi);
+    buttonEdit.addActionListener(aksi);
+    buttonHapus.addActionListener(aksi);
+    buttonReset.addActionListener(aksi);
+    buttonRefresh.addActionListener(aksi);
+    
+    load_table();
+        
+        
     }
 
     /**
@@ -462,7 +483,7 @@ public class dashboard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-private void load_table(){
+public void load_table(){
     // Tambahkan tanda kurung kurawal {} setelah membuat objek untuk melakukan override method
     DefaultTableModel model = new DefaultTableModel() {
         @Override
@@ -651,35 +672,11 @@ private void load_table(){
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         // TODO add your handling code here:
-    inputId.setText("Input id");
-    inputId.setForeground(new java.awt.Color(204, 204, 204));
-
-    inputNama.setText("Input nama");
-    inputNama.setForeground(new java.awt.Color(204, 204, 204));
-
-    // Reset ComboBox
-    boxJabatan.setSelectedIndex(0);
-    jComboBox2.setSelectedIndex(0);
-
-    // Reset RadioButton
-    jenisKaryawan.clearSelection();
-
-    // Reset Gaji & Tunjangan
-    inputGajiPokok.setText(". ");
-    inputTunjangan.setText(". ");
-    inputTunjangan.setEnabled(true);
-    inputTunjangan.setBackground(java.awt.Color.WHITE);
-    inputTunjangan.setForeground(java.awt.Color.BLACK);
     }//GEN-LAST:event_buttonResetActionPerformed
 
     private void buttonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRefreshActionPerformed
         // TODO add your handling code here:
-        load_table();
-        
-        int totalBaris = jTable1.getRowCount();
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "Seluruh data (" + totalBaris + " karyawan)", "Informasi",
-            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+      
     }//GEN-LAST:event_buttonRefreshActionPerformed
 
     private void buttonKembaliLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKembaliLoginActionPerformed
@@ -700,7 +697,7 @@ private void load_table(){
     }//GEN-LAST:event_KaryawanTetapActionPerformed
 
     private void KaryawanKontakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KaryawanKontakActionPerformed
-        // TODO add your handling code here:
+    // TODO add your handling code here:
     inputTunjangan.setEnabled(false);
     inputTunjangan.setText("0.");
     inputTunjangan.setBackground(new java.awt.Color(204, 204, 204));
@@ -718,220 +715,14 @@ private void load_table(){
 
     private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
         // TODO add your handling code here:
-        String id = inputId.getText().trim();
-        String nama = inputNama.getText().trim();
-        String jabatan = (String) boxJabatan.getSelectedItem();
-        String departemen = (String) jComboBox2.getSelectedItem();
-        String gajiText = inputGajiPokok.getText().trim();
-        String tunjanganText = inputTunjangan.getText().trim();
-        String jenisKaryawan = "";
-
-        // Validasi ID
-        if (id.isEmpty() || id.equals("Input id")) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "ID Karyawan tidak boleh kosong!", "Peringatan",
-                javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        // Validasi Nama
-        if (nama.isEmpty() || nama.equals("Input nama")) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "Nama Karyawan tidak boleh kosong!", "Peringatan",
-                javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        // Validasi Jabatan
-        if (jabatan.equals("--Jabatan--")) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "Pilih Jabatan terlebih dahulu!", "Peringatan",
-                javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        // Validasi Departemen
-        if (departemen.equals("--Departemen--")) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "Pilih Departemen terlebih dahulu!", "Peringatan",
-                javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        // Validasi Jenis Karyawan
-        if (!KaryawanTetap.isSelected() && !KaryawanKontak.isSelected()) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "Pilih Jenis Karyawan terlebih dahulu!", "Peringatan",
-                javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        jenisKaryawan = KaryawanTetap.isSelected() ? "Tetap" : "Kontrak";
-
-        // Parse Gaji Pokok
-        double gajiPokok = 0;
-        try {
-            String gajiAngka = gajiText.replace(".", "").replace(". ", "").trim();
-            if (gajiAngka.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                    "Gaji Pokok tidak boleh kosong!", "Peringatan",
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            gajiPokok = Double.parseDouble(gajiAngka);
-        } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "Format Gaji Pokok tidak valid!", "Error",
-                javax.swing.JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Parse Tunjangan (hanya jika Tetap / field aktif)
-        double tunjangan = 0;
-        if (inputTunjangan.isEnabled()) {
-            try {
-                String tunjanganAngka = tunjanganText.replace("Rp.", "").replace("Rp. ", "").trim();
-                if (!tunjanganAngka.isEmpty()) {
-                    tunjangan = Double.parseDouble(tunjanganAngka);
-                }
-            } catch (NumberFormatException e) {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                    "Format Tunjangan tidak valid!", "Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        }
-
-        // Tambahkan baris ke tabel
-        javax.swing.table.DefaultTableModel model =
-        (javax.swing.table.DefaultTableModel) jTable1.getModel();
-        try{
-            Connection conn = Koneksi.configDB();
-            String sql = "INSERT INTO karyawan (id_karyawan, nama_karyawan, jabatan, departemen, jenis_karyawan, gaji_pokok, tunjangan) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement pst = conn.prepareStatement(sql);
-
-            pst.setString(1, id);
-            pst.setString(2, nama);
-            pst.setString(3, jabatan);
-            pst.setString(4, departemen);
-            pst.setString(5, jenisKaryawan);
-            pst.setDouble(6, gajiPokok);
-            pst.setDouble(7, tunjangan);
-
-            pst.execute();
-
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "Data karyawan berhasil ditambahkan", "Berhasil", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-
-            load_table();
-            buttonResetActionPerformed(null);
-
-        } catch (Exception e){
-            javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan ke database: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
-
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "Data karyawan berhasil ditambahkan!", "Berhasil",
-            javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_buttonTambahActionPerformed
 
     private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
         // TODO add your handling code here:
-        if (inputId.getText().equals("Input id") || inputId.getText().trim().isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Silakan pilih data pada tabel terlebih dahulu!");
-        return;
-    }
-    
-    // 2. Membuat konfirmasi (Pop-up) "Apakah anda yakin?" demi keamanan data
-    int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(this, 
-            "Apakah Anda yakin ingin menghapus karyawan dengan ID " + inputId.getText() + "?", 
-            "Konfirmasi Hapus", 
-            javax.swing.JOptionPane.YES_NO_OPTION);
-            
-    if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
-        try {
-            
-            java.sql.Connection conn = Koneksi.configDB();
-            
-            // Query SQL Delete berdasarkan id_karyawan
-            String sql = "DELETE FROM karyawan WHERE id_karyawan = ?";
-            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-            
-
-            pst.setString(1, inputId.getText());
-            
-            int hasil = pst.executeUpdate();
-            
-            if (hasil > 0) {
-                javax.swing.JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus!");
-                
-      
-                buttonResetActionPerformed(null); 
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(null, "Data tidak ditemukan di database.");
-            }
-            
-        } catch (java.sql.SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Gagal menghapus data: " + e.getMessage());
-        }
-    }
-        
-            
     }//GEN-LAST:event_buttonHapusActionPerformed
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
         // TODO add your handling code here:
-        if (inputId.getText().equals("Input id") || inputId.getText().trim().isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Silakan pilih data pada tabel yang ingin diubah terlebih dahulu!");
-        return;
-    }
-    
-    try {
-       
-        java.sql.Connection conn = Koneksi.configDB();
-        
-      
-        String sql = "UPDATE karyawan SET nama_karyawan = ?, jabatan = ?, departemen = ?, jenis_karyawan = ?, gaji_pokok = ?, tunjangan = ? WHERE id_karyawan = ?";
-        
-        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-        
-        pst.setString(1, inputNama.getText());
-        pst.setString(2, boxJabatan.getSelectedItem().toString());
-        pst.setString(3, jComboBox2.getSelectedItem().toString());
-        
-     
-        String jenisKaryawan = jenisKaryawan.isSelected() ? "Tetap" : "Honor";
-        pst.setString(4, jenisKaryawan);
-        
-        // Membersihkan format string "Rp." dan titik agar bisa masuk ke database sebagai angka (int)
-        String gaji = inputGajiPokok.getText().replace("Rp. ", "").replace(".", "").trim();
-        String tunjangan = inputTunjangan.getText().replace("Rp. ", "").replace(".", "").trim();
-        
-        pst.setInt(5, Integer.parseInt(gaji));
-        pst.setInt(6, Integer.parseInt(tunjangan));
-        
-
-        pst.setString(7, inputId.getText());
-        
-
-        int hasil = pst.executeUpdate();
-        
-        if (hasil > 0) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Data Karyawan Berhasil Diperbarui!");
-            
-            // 5. Refresh kembali tabel agar data yang berubah langsung kelihatan
-            load_table(); 
-            
-            // 6. Kosongkan/Reset kembali form inputan
-            buttonResetActionPerformed(null); 
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(null, "Gagal memperbarui, ID Karyawan tidak ditemukan.");
-        }
-        
-    } catch (java.sql.SQLException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Gagal mengubah data ke database: " + e.getMessage());
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Format angka pada Gaji Pokok atau Tunjangan salah!");
-    }
     }//GEN-LAST:event_buttonEditActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -953,6 +744,16 @@ private void load_table(){
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonEditMouseClicked
 
+    public javax.swing.JTextField getInputId() { return inputId; }
+    public javax.swing.JTextField getInputNama() { return inputNama; }
+    public javax.swing.JComboBox<String> getBoxJabatan() { return boxJabatan; }
+    public javax.swing.JComboBox<String> getjComboBox2() { return jComboBox2; }
+    public javax.swing.JTextField getInputGajiPokok() { return inputGajiPokok; }
+    public javax.swing.JTextField getInputTunjangan() { return inputTunjangan; }
+    public javax.swing.JRadioButton getKaryawanTetap() { return KaryawanTetap; }
+    public javax.swing.JRadioButton getKaryawanKontak() { return KaryawanKontak; }
+    public javax.swing.ButtonGroup getJenisKaryawan() { return jenisKaryawan; }
+    public javax.swing.JTable getjTable1() { return jTable1; }
     /**
      * @param args the command line arguments
      */
