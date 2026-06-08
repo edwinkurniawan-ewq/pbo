@@ -2,6 +2,7 @@ package com.mycompany.projectkel8.controller;
 
 import com.mycompany.projectkel8.Presensi;
 import com.mycompany.projectkel8.model.PresensiModel;
+import com.mycompany.projectkel8.slipgaji;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -157,33 +158,39 @@ public class FungsiPresensiController implements ActionListener {
     // -----------------------------------------------------------
     // CETAK — preview slip dari baris terpilih
     // -----------------------------------------------------------
-    private void eksekusiCetak() {
-        int baris = view.getjTable1().getSelectedRow();
-        if (baris < 0) {
-            tampilPeringatan("Pilih karyawan dari tabel terlebih dahulu untuk mencetak slip!");
-            return;
-        }
+private void eksekusiCetak() {
 
-        String idKaryawan      = nilaiTabel(baris, 1);
-        String namaKaryawan    = nilaiTabel(baris, 2);
-        String tanggal         = nilaiTabel(baris, 3);
-        String statusKehadiran = nilaiTabel(baris, 4);
-        String durasiLembur    = nilaiTabel(baris, 5);
+    int baris = view.getjTable1().getSelectedRow();
 
-        String slip = "============================\n"
-                    + "        SLIP PRESENSI       \n"
-                    + "============================\n"
-                    + "ID Karyawan  : " + idKaryawan      + "\n"
-                    + "Nama         : " + namaKaryawan    + "\n"
-                    + "Tanggal      : " + tanggal         + "\n"
-                    + "Status       : " + statusKehadiran + "\n"
-                    + "Lembur       : " + durasiLembur    + "\n"
-                    + "============================\n"
-                    + "Dicetak pada : " + LocalDate.now() + "\n"
-                    + "============================\n";
+    if (baris < 0) {
 
-        JOptionPane.showMessageDialog(view, slip, "Preview Slip", JOptionPane.INFORMATION_MESSAGE);
+        tampilPeringatan(
+            "Pilih karyawan dari tabel terlebih dahulu!"
+        );
+
+        return;
     }
+
+    String idKaryawan =
+        nilaiTabel(baris, 1);
+
+    String tanggal =
+        nilaiTabel(baris, 3);
+
+    String status =
+        nilaiTabel(baris, 4);
+
+    String lembur =
+        nilaiTabel(baris, 5);
+
+    new slipgaji(
+        idKaryawan,
+        tanggal,
+        status,
+        lembur
+    ).setVisible(true);
+
+}
 
     // -----------------------------------------------------------
     // CLEAR — reset semua field form

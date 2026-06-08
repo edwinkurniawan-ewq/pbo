@@ -525,6 +525,27 @@ public void load_table(){
 }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+    int row = jTable1.getSelectedRow();
+
+    if(row == -1){
+
+        JOptionPane.showMessageDialog(
+            this,
+            "Pilih data terlebih dahulu!"
+        );
+
+        return;
+}
+
+    String idKaryawan =
+        jTable1.getValueAt(row,0).toString();
+
+    slipgaji sg =
+    new slipgaji(idKaryawan);
+
+    sg.setVisible(true);
+
+    this.dispose(); //   opsional
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void buttonAbsensiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAbsensiActionPerformed

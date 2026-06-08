@@ -3,7 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.projectkel8;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import com.mycompany.projectkel8.dashboard;
+import com.mycompany.projectkel8.dashboard.Koneksi;
+import com.mycompany.projectkel8.model.Karyawan;
+import com.mycompany.projectkel8.model.KaryawanTetap;
+import com.mycompany.projectkel8.model.KaryawanKontrak;
+import com.mycompany.projectkel8.model.SlipGaji;
 /**
  *
  * @author USER
@@ -11,13 +19,118 @@ package com.mycompany.projectkel8;
 public class slipgaji extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(slipgaji.class.getName());
+   
+    private Karyawan karyawan;
+    private String statusPresensi;
+    private String lemburPresensi;
+    public slipgaji(
+            String idKaryawan,
+            String tanggal,
+            String status,
+            String lembur) {
 
-    /**
-     * Creates new form 
-     */
-    public slipgaji() {
+        initComponents();
+
+        this.statusPresensi = status;
+        this.lemburPresensi = lembur;
+
+        loadDataKaryawan(idKaryawan);
+
+        jLabel7.setText(
+            "Tanggal Cetak : " + tanggal
+        );
+
+        jLabel22.setText(
+            "Status Kehadiran : "
+            + status
+            + " | Lembur : "
+            + lembur + " jam"
+        );
+    }
+        public slipgaji(String idKaryawan) {
+
+           initComponents();
+
+           this.statusPresensi = "Tidak Ada Data";
+           this.lemburPresensi = "0";
+
+           loadDataKaryawan(idKaryawan);
+
+           jLabel22.setText(
+               "Data presensi tidak tersedia"
+           );
+       }
+     public slipgaji(){
         initComponents();
     }
+ 
+private void loadDataKaryawan(String idKaryawan){
+
+    try{
+
+        Connection conn = Koneksi.configDB();
+
+        String sql = "SELECT * FROM karyawan WHERE id_karyawan=?";
+
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, idKaryawan);
+
+        ResultSet rs = pst.executeQuery();
+
+        if(rs.next()){
+
+            String jenis = rs.getString("jenis_karyawan");
+
+            // =========================
+            // 1. PILIH CLASS (POLYMORPHISM)
+            // =========================
+            if(jenis.equalsIgnoreCase("Tetap")){
+                KaryawanTetap kt = new KaryawanTetap();
+                kt.idKaryawan = rs.getString("id_karyawan");
+                kt.nama = rs.getString("nama_karyawan");
+                kt.posisi = rs.getString("jabatan");
+                kt.gajiPokok = rs.getDouble("gaji_pokok");
+                kt.tunjangan = rs.getDouble("tunjangan");
+
+                karyawan = kt;
+
+            } else {
+                KaryawanKontrak kk = new KaryawanKontrak();
+                kk.idKaryawan = rs.getString("id_karyawan");
+                kk.nama = rs.getString("nama_karyawan");
+                kk.posisi = rs.getString("jabatan");
+                kk.gajiPokok = rs.getDouble("gaji_pokok");
+                kk.tunjangan = rs.getDouble("tunjangan");
+
+                karyawan = kk;
+            }
+
+            // =========================
+            // 2. SET LABEL DASAR
+            // =========================
+            jLabel5.setText("ID Karyawan : " + rs.getString("id_karyawan"));
+            jLabel6.setText("Nama : " + rs.getString("nama_karyawan"));
+            jLabel8.setText("Status Kerja : " + jenis);
+            jLabel9.setText("Departemen : " + rs.getString("departemen"));
+            jLabel12.setText("- Gaji Pokok : Rp " + rs.getDouble("gaji_pokok"));
+            jLabel13.setText("- Tunjangan : Rp " + rs.getDouble("tunjangan"));
+
+            // =========================
+            // 3. HITUNG LOGIKA OOP
+            // =========================
+            double gaji = karyawan.hitungGaji();
+            double pajak = karyawan.hitungPajak();
+            double bersih = gaji - pajak;
+
+            jLabel18.setText("TOTAL BONUS : Rp " + gaji);
+            jLabel19.setText("TOTAL POTONGAN : Rp " + pajak);
+            jLabel21.setText("TOTAL GAJI BERSIH : Rp " + bersih);
+        }
+
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,7 +145,6 @@ public class slipgaji extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -60,23 +172,29 @@ public class slipgaji extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 102));
+        jPanel1.setForeground(new java.awt.Color(30, 30, 30));
 
+        jLabel1.setForeground(new java.awt.Color(30, 30, 30));
         jLabel1.setText("PREVIEW SLIP GAJI");
 
+        jLabel2.setForeground(new java.awt.Color(30, 30, 30));
         jLabel2.setText("PT. AIYAIYA - SLIP GAJI KARYAWAN");
 
         jLabel3.setText("--------------------------------------");
 
-        jLabel4.setText("ID Slip           :");
-
+        jLabel5.setForeground(new java.awt.Color(30, 30, 30));
         jLabel5.setText("ID Karyawan :");
 
+        jLabel6.setForeground(new java.awt.Color(30, 30, 30));
         jLabel6.setText("Nama            :");
 
+        jLabel7.setForeground(new java.awt.Color(30, 30, 30));
         jLabel7.setText("Tanggal Cetak :");
 
+        jLabel8.setForeground(new java.awt.Color(30, 30, 30));
         jLabel8.setText("Status Kerja      :");
 
+        jLabel9.setForeground(new java.awt.Color(30, 30, 30));
         jLabel9.setText("Departemen     :");
 
         jLabel10.setText("-----------------------------------------------------------------------------------------------------------------------------------------------");
@@ -134,7 +252,6 @@ public class slipgaji extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel4)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,7 +283,7 @@ public class slipgaji extends javax.swing.JFrame {
                     .addComponent(jLabel19))
                 .addGap(127, 127, 127))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
+                .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,9 +320,7 @@ public class slipgaji extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel7))
+                .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -320,7 +435,6 @@ public class slipgaji extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

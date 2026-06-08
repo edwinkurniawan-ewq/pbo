@@ -1,28 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.mycompany.projectkel8.model;
 
 import com.mycompany.projectkel8.model.Karyawan;
 
-/**
- *
- * @author fshlyf
- */
 public class KaryawanTetap extends Karyawan {
+
     public Double gajiPokok;
-    public Double tunjangan;
 
     @Override
     public double hitungGaji() {
-        // Logika dasar: Gaji Pokok + Tunjangan
-        return this.gajiPokok + this.tunjangan;
+        return gajiPokok + tunjangan;
     }
 
     @Override
     public Double hitungPajak() {
-        // Misal: Pajak Karyawan Tetap adalah 5% dari Gaji Pokok
-        return this.gajiPokok * 0.05;
+        return gajiPokok * 0.05;
     }
+    
+    @Override
+    public double getGajiPokok() {
+    return gajiPokok;
+}
 }

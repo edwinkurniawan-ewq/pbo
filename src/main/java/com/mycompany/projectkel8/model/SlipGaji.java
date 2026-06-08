@@ -6,13 +6,28 @@ package com.mycompany.projectkel8.model;
 import java.util.Date;
 
 public class SlipGaji {
+
     public String idSlip;
     public Date tanggalCetak;
+
     public Double totalPotongan;
     public Double totalBonus;
 
+    public Karyawan karyawan;
+
+    public Double hitungTakeHomePay() {
+
+        return karyawan.hitungGaji()
+                + totalBonus
+                - totalPotongan;
+    }
+
     public void cetakSlip() {
-        // Kode print teks atau trigger GUI kuning kelompokmu
-        System.out.println("Slip Gaji " + idSlip + " berhasil dicetak pada " + tanggalCetak);
+
+        System.out.println(
+            "Slip Gaji "
+            + idSlip
+            + " berhasil dicetak"
+        );
     }
 }
